@@ -1,6 +1,5 @@
 import React from "react";
 import "../App.css";
-import RootHead from "./RootHead";
 
 const Root = ({ tree }) => {
   console.log(tree);
@@ -10,11 +9,26 @@ const Root = ({ tree }) => {
 
   return (
     <>
-      <RootHead setVisible={setVisible} visible={visible} tree={tree} handleAddChild={handleAddChild}/>
+      <div className="nodeContainer">
+        <div className="node">
+          <button
+            onClick={() => setVisible(!visible)}
+            style={{ padding: "5px" }}
+          >
+            {visible ? "-" : "+"}
+          </button>
+          <h3>{tree.name}</h3>
+        </div>
+        <button onClick={handleAddChild}>Add Child</button>
+      </div>
       {/* <div style={{visibility:{visible ? "visible" : "hidden"}}}>
       </div> */}
       {visible && <div className="childBlock">
-          <RootHead setVisible={setVisible} visible={visible} tree={tree.children[0]} handleAddChild={handleAddChild}/>
+          {tree.children && tree.children.map((el, i)=>{
+            return <div style={{marginLeft: "20px"}}>
+              <Root key={i} tree={el}/>
+            </div>
+          })}
         </div>}
     </>
   );
