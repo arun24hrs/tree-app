@@ -1,23 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react'
+import Root from './components/Root';
 
+const initTreeView = {
+  name: "root",
+  children: [
+    {
+      name: "child1",
+      children: [
+        { name: "child1-child1", data: "c1-c1 Hello" },
+        { name: "child1-child2", data: "c1-c2 JS" },
+      ],
+    },
+    { name: "child2", data: "c2 World" },
+  ],
+};
 function App() {
+  const [treeView, setTreeView] = React.useState(initTreeView);
+  const [output, setOutput] = React.useState("");
+
+  const children = (onAddChild) => {
+    setTreeView(onAddChild);
+  };
+
+  const handleClick = () => {
+    console.log(treeView);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <Root tree={treeView}/>
+      <button onClick={handleClick}>Export</button>
+      <p></p>
     </div>
   );
 }
